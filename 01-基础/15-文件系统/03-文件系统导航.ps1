@@ -1,16 +1,16 @@
 ﻿# 来源
 # https://www.pstips.net/navigating-the-file-system.html
 
-$my_path = "$HOME\Desktop\Powershell_Study"
+$my_path = "G:\PowerShellStudy"
 Set-Location $my_path
 
 # ⏹获取当前路径,相当于linux中的 pwd
 Get-Location | Out-Host
-# C:\Users\xxx\Desktop\Powershell_Study
+# G:\PowerShellStudy
 
 # ⏹$PWD变量 和 Get-Location 作用相同
 $PWD | Out-Host
-# C:\Users\xxx\Desktop\Powershell_Study
+# G:\PowerShellStudy
 
 # ⏹相当于cd命令,切换工作目录
 Set-Location $env:APPDATA
@@ -23,8 +23,8 @@ Set-Location $my_path
     ⏹相对路径转换为绝对路径(支持使用通配符)
        文件一定要存在,否则不会转换成功
 #>
-(Get-ChildItem ".\笔记.md").FullName  # C:\Users\XXX\Desktop\Powershell_Study\笔记.md
-(Resolve-Path ".\笔记.md").Path  # C:\Users\XXX\Desktop\Powershell_Study\笔记.md
+(Get-ChildItem ".\README.md").FullName  # G:\PowerShellStudy\README.md
+(Resolve-Path ".\README.md").Path  # G:\PowerShellStudy\README.md
 
 # 暂停1秒钟
 Start-Sleep -Seconds 1

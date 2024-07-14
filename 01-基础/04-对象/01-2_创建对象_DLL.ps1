@@ -1,4 +1,4 @@
-﻿$ddl_path = "$($HOME)\Desktop\Powershell_Study\01-基础\04-对象\file\Test.dll";
+﻿$ddl_path = "G:\PowerShellStudy\01-基础\04-对象\file\Test.dll";
 Test-Path $ddl_path  # True
 Write-Host '↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳' -ForegroundColor Red
 
