@@ -12,7 +12,7 @@ $wifi_list_count = ($wifi_name_list | Measure-Object).Count
 $wifi_object_array = @()
 
 # 根基wifi名称获取wifi信息
-for ($i = 1; $i -le $wifi_list_count; $i++) {
+for ($i = 0; $i -le $wifi_list_count; $i++) {
 
     # 创建一个Powershell自定义对象,并添加到数组中
     $wifi_object_array += [PSCustomObject]@{

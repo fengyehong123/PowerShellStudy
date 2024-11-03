@@ -1,5 +1,5 @@
 ﻿# Excel文件路径
-$BookPath = "C:\Users\贾铭威\Desktop\test.xlsx";
+$BookPath = "$HOME\Desktop\test.xlsx";
 
 # 创建Excel和工作簿对象
 $Excel = New-Object -com Excel.Application

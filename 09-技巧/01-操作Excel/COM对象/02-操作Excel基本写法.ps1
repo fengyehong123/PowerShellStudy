@@ -1,5 +1,5 @@
 ﻿# Excel文件路径
-$excelPath = "C:\Users\贾铭威\Desktop\test.xlsx"
+$excelPath = "$HOME\Desktop\test.xlsx"
 
 # 判断文件是否存在
 if (-not (Test-Path $excelPath)) {

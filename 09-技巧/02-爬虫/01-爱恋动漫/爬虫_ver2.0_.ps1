@@ -6,7 +6,7 @@
 )
 
 # 域名
-$domain = 'http://www.kisssub.org'
+$domain = 'https://www.kisssub.org'
 # 搜索关键字,通过 [System.Uri]::EscapeDataString 对汉字进行编码
 $enCoded_search_keyword = [System.Uri]::EscapeDataString($搜索关键词)
 # 请求地址
