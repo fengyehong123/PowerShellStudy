@@ -1,7 +1,7 @@
 ﻿# 来源
 # https://www.pstips.net/navigating-the-file-system.html
 
-$my_path = "G:\PowerShellStudy"
+$my_path = "E:\My_Project\PowerShellStudy"
 Set-Location $my_path
 
 # ⏹获取当前路径,相当于linux中的 pwd

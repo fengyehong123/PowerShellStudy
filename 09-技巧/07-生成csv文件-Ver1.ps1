@@ -3,7 +3,7 @@ $file_name = 'person_data.csv'
 # 路径
 $outputFile = "$Home\Desktop\$file_name"
 # CSV 文件的总行数
-$rows = 5000
+$rows = 500000
 # 并行线程数
 $threadCount = 4
 # 每个线程生成的记录数量

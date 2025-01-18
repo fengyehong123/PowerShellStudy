@@ -1,4 +1,11 @@
-﻿# 文件名称
+﻿<#
+    脚本中使用了 Start-ThreadJob 方法
+    该方法在 Powershell6 以上版本才支持，Powershell5.1 版本的话，需要通话下面的命令行安装
+
+    Install-Module -Name ThreadJob -Scope CurrentUser
+#>
+
+# 文件名称
 $file_name = 'person_data.csv'
 # 路径
 $outputFile = "$Home\Desktop\$file_name"
@@ -16,8 +23,6 @@ $threadCount = 4
 # 每个线程生成的记录数量
 $chunkSize = [math]::Ceiling($rows / $threadCount)
 
-# ====================================================================================================================
-
 # 判断文件是否存在，存在的话就删除
 if (Test-Path -Path $outputFile) {
     Remove-Item -Path $outputFile -Force
@@ -34,41 +39,43 @@ $scriptBlock = {
         , [int]$endRow
         , [string]$tempFile
     )
-    
-    # 获取随机数对象
-    $random = [System.Random]::new()
-    # 获取当前日期
-    $currentDate = Get-Date
 
-    <# 
-        ⏹使用 StreamWriter 进入CSV写入，提升性能
+    # 在脚本块内定义函数，然后再进行调用，速度更快
+    function New-CSVChunk {
+        param(
+            [int]$startRow,
+            [int]$endRow,
+            [string]$tempFile
+        )
+
+        # 获取随机数对象
+        $random = [System.Random]::new()
+        # 获取当前日期
+        $currentDate = Get-Date
+
+        <# 
+            使用 StreamWriter 进入CSV写入，提升性能
             参数1：文件路径
-            参数2：模式
-                $true 表示 如果文件已经存在，将数据追加到文件末尾。
-                $false 表示 如果文件已经存在，将覆盖文件内容（即清空文件重新写入）。
+            参数2：模式 $true 表示追加，$false 表示覆盖
             参数3：文件编码方式
-    #>
-    $writer = [System.IO.StreamWriter]::new($tempFile, $true, [System.Text.Encoding]::UTF8)
-    try {
-        for ($i = $startRow; $i -le $endRow; $i++) {
-
-            # =========================对应数据库的各字段值=========================
-            $id = $i
-            $name = "Name_$i"
-            $age = $random.Next(18, 60)
-            $email = "user$i@example.com"
-            $createdDate = $currentDate.AddDays(- $random.Next(0, 365)).ToString("yyyy/MM/dd HH:mm:ss")
-            # =========================对应数据库的各字段值=========================
-
-            # =========================一行csv=========================
-            $line = "`"$id`",`"$name`",`"$age`",`"$email`",`"$createdDate`""
-            # =========================一行csv=========================
-
-            $writer.WriteLine($line)
+        #>
+        $writer = [System.IO.StreamWriter]::new($tempFile, $true, [System.Text.Encoding]::UTF8)
+        try {
+            for ($i = $startRow; $i -le $endRow; $i++) {
+                $id = $i
+                $name = "Name_$i"
+                $age = $random.Next(18, 60)
+                $email = "user$i@example.com"
+                $createdDate = $currentDate.AddDays(- $random.Next(0, 365)).ToString("yyyy/MM/dd HH:mm:ss")
+                $line = "`"$id`",`"$name`",`"$age`",`"$email`",`"$createdDate`""
+                $writer.WriteLine($line)
+            }
+        } finally {
+            $writer.Close()
         }
-    } finally {
-        $writer.Close()
     }
+    # 传参，调用函数
+    New-CSVChunk -startRow $startRow -endRow $endRow -tempFile $tempFile
 }
 
 # CSV文件合成
@@ -127,7 +134,7 @@ try {
             Start-Job 的返回值是当前的 Job对象
             将若干个Job对象放到数组中，便于之后的代码管理Job的生命周期
         #>
-        $jobs += Start-Job -ScriptBlock $scriptBlock -ArgumentList $startRow, $endRow, $tempFile
+        $jobs += Start-ThreadJob -ScriptBlock $scriptBlock -ArgumentList $startRow, $endRow, $tempFile
     }
 	
 	# 统计生成csv文件所消耗的时间
@@ -136,14 +143,9 @@ try {
         Write-Host "临时csv文件开始生成..."
 
         # 管理 Job 的生命周期
-        $jobs | ForEach-Object {
-            # 等待 Job 完成，暂停主线程，直到当前作业完成。
-            Wait-Job -Job $_
-            # 提取 Job 的输出结果。如果没有调用这个命令，作业输出将保留在作业对象中。
-            Receive-Job -Job $_
-            # 删除Job，释放资源
-            Remove-Job -Job $_
-        }
+        $jobs | Wait-Job
+        $jobs | Receive-Job
+        $jobs | Remove-Job
 
         # 合并所有并发生成的csv临时文件,组装成最终的总csv文件
         Write-Host "临时csv文件生成完毕,开启合并..."
