@@ -49,20 +49,27 @@ $scriptBlock = {
         $currentDate = Get-Date
 
         <# 
-            使用 StreamWriter 进入CSV写入，提升性能
-            参数1：文件路径
-            参数2：模式 $true 表示追加，$false 表示覆盖
-            参数3：文件编码方式
+            ⏹使用 StreamWriter 进入CSV写入，提升性能
+                参数1：文件路径
+                参数2：模式 $true 表示追加，$false 表示覆盖
+                参数3：文件编码方式
         #>
         $writer = [System.IO.StreamWriter]::new($tempFile, $true, [System.Text.Encoding]::UTF8)
         try {
             for ($i = $startRow; $i -le $endRow; $i++) {
+
+                # =========================对应数据库的各字段值=========================
                 $id = $i
                 $name = "Name_$i"
                 $age = $random.Next(18, 60)
                 $email = "user$i@example.com"
                 $createdDate = $currentDate.AddDays(- $random.Next(0, 365)).ToString("yyyy/MM/dd HH:mm:ss")
+                # =========================对应数据库的各字段值=========================
+
+                # =========================一行csv=========================
                 $line = "`"$id`",`"$name`",`"$age`",`"$email`",`"$createdDate`""
+                # =========================一行csv=========================
+
                 $writer.WriteLine($line)
             }
         } finally {
