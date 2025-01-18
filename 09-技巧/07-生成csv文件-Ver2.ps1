@@ -4,7 +4,7 @@ $file_name = 'person_data.csv'
 $outputFile = "$Home\Desktop\$file_name"
 
 # CSV 文件的总行数
-$rows = 500000
+$rows = 5000000
 <#
     是否一口气读取csv文件到内存写入
     内存大的电脑适合开启此Flag
@@ -35,40 +35,42 @@ $scriptBlock = {
         , [string]$tempFile
     )
     
-    # 获取随机数对象
-    $random = [System.Random]::new()
-    # 获取当前日期
-    $currentDate = Get-Date
+    # 在脚本块内定义函数，然后再进行调用，速度更快
+    function New-CSVChunk {
+        param(
+            [int]$startRow,
+            [int]$endRow,
+            [string]$tempFile
+        )
 
-    <# 
-        ⏹使用 StreamWriter 进入CSV写入，提升性能
+        # 获取随机数对象
+        $random = [System.Random]::new()
+        # 获取当前日期
+        $currentDate = Get-Date
+
+        <# 
+            使用 StreamWriter 进入CSV写入，提升性能
             参数1：文件路径
-            参数2：模式
-                $true 表示 如果文件已经存在，将数据追加到文件末尾。
-                $false 表示 如果文件已经存在，将覆盖文件内容（即清空文件重新写入）。
+            参数2：模式 $true 表示追加，$false 表示覆盖
             参数3：文件编码方式
-    #>
-    $writer = [System.IO.StreamWriter]::new($tempFile, $true, [System.Text.Encoding]::UTF8)
-    try {
-        for ($i = $startRow; $i -le $endRow; $i++) {
-
-            # =========================对应数据库的各字段值=========================
-            $id = $i
-            $name = "Name_$i"
-            $age = $random.Next(18, 60)
-            $email = "user$i@example.com"
-            $createdDate = $currentDate.AddDays(- $random.Next(0, 365)).ToString("yyyy/MM/dd HH:mm:ss")
-            # =========================对应数据库的各字段值=========================
-
-            # =========================一行csv=========================
-            $line = "`"$id`",`"$name`",`"$age`",`"$email`",`"$createdDate`""
-            # =========================一行csv=========================
-
-            $writer.WriteLine($line)
+        #>
+        $writer = [System.IO.StreamWriter]::new($tempFile, $true, [System.Text.Encoding]::UTF8)
+        try {
+            for ($i = $startRow; $i -le $endRow; $i++) {
+                $id = $i
+                $name = "Name_$i"
+                $age = $random.Next(18, 60)
+                $email = "user$i@example.com"
+                $createdDate = $currentDate.AddDays(- $random.Next(0, 365)).ToString("yyyy/MM/dd HH:mm:ss")
+                $line = "`"$id`",`"$name`",`"$age`",`"$email`",`"$createdDate`""
+                $writer.WriteLine($line)
+            }
+        } finally {
+            $writer.Close()
         }
-    } finally {
-        $writer.Close()
     }
+    # 传参，调用函数
+    New-CSVChunk -startRow $startRow -endRow $endRow -tempFile $tempFile
 }
 
 # CSV文件合成
@@ -122,10 +124,15 @@ try {
         $tempFile = "$outputFile.$_.part"
 
         <#
-            通过 Start-Job 立即在执行ScriptBlock代码块中代码
+            ⏹通过 Start-Job 立即在执行ScriptBlock代码块中代码
             Job作业会独立于主线程，在后台运行
             Start-Job 的返回值是当前的 Job对象
             将若干个Job对象放到数组中，便于之后的代码管理Job的生命周期
+
+            ⏹在Powershell6以上版本，默认安装了 ThreadJob 模块
+            该模块中有Start-ThreadJob方法，使用方法和 Start-Job 相同
+            若Powershell5.1 版本的话，需要通话下面的命令行安装
+            Install-Module -Name ThreadJob -Scope CurrentUser
         #>
         $jobs += Start-Job -ScriptBlock $scriptBlock -ArgumentList $startRow, $endRow, $tempFile
     }
