@@ -42,7 +42,13 @@
 Write-Host '↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳' -ForegroundColor Red
 
 # ⏹查看脚本的执行策略
-Get-ExecutionPolicy | Out-Host  # Bypass
+# 1. 查看当前用户的执行策略
+Get-ExecutionPolicy -Scope CurrentUser # Bypass
+# 2. 查看当前系统的执行策略
+Get-ExecutionPolicy -Scope LocalMachine
 
 # ⏹更改脚本的执行策略(仅更新当前用户的脚本执行策略)
+# 1. 不阻止任何脚本运行，不显示任何警告或提示。
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass
+# 2. 本地创建的脚本可以运行，下载的脚本需要经过有效的签名。
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned

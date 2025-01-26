@@ -72,3 +72,11 @@ $PROFILE
 
 # powershell中设置控制台的编码格式
 $OutputEncoding = [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
+Write-Host '↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳' -ForegroundColor DarkYellow
+
+<#
+    $PSCommandPath 是一个特殊的变量，表示当前脚本所在的绝对路径
+#>
+Write-Host $PSCommandPath
+Write-Host $MyInvocation.MyCommand.Definition
