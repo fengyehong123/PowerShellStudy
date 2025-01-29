@@ -1,4 +1,6 @@
-﻿$WebDavUrl = "https://jike.teracloud.jp/dav/"
+﻿using namespace System.Runtime.InteropServices
+
+$WebDavUrl = "https://jike.teracloud.jp/dav/"
 
 # 显示凭据输入框，显示UI让用户输入账号密码
 $Credential = Get-Credential
@@ -22,8 +24,8 @@ try {
             从指定的内存地址中读取字符串（BSTR 格式）并转换为 .NET 的 String 类型。
             PtrToStringAuto 会自动根据系统的编码（ANSI 或 Unicode）处理字符串内容。
     #>
-    $bstrAddress = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureString)
-    $password = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstrAddress)
+    $bstrAddress = [Marshal]::SecureStringToBSTR($secureString)
+    $password = [Marshal]::PtrToStringAuto($bstrAddress)
 
     # 使用 net use 挂载 WebDAV
     net use W: $WebDavUrl /user:$username $password /persistent:yes
@@ -39,4 +41,3 @@ try {
 }
 
 Read-Host "按 Enter 键退出..."
-

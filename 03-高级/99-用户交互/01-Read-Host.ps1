@@ -14,15 +14,3 @@ $input_pwd = Read-Host -AsSecureString '请输入您的密码'
 $temp = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($input_pwd)
 [Runtime.InteropServices.Marshal]::PtrToStringAuto($temp) | Out-Host
 Write-Host '↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳' -ForegroundColor Red
-
-<#
-    ⏹如果想授权一个用户需要提供用户凭据,可以使用Get-Credential命令
-    该命令会弹出一个安全对话框,一旦用户输入完毕,就会返回一个Credential对象包含用户名和密码
-#>
-$cre = Get-Credential 贾飞天
-$cre | Out-Host
-<#
-    UserName   Password        
-    --------   --------        
-    贾飞天      System.Security.SecureString
-#>
