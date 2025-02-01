@@ -5,6 +5,7 @@ param(
     [string]$搜索关键词
 )
 
+# 通过模块的方式导入session和head对象
 Import-Module "$($PSScriptRoot)\module\WebParam.psm1" -Function New-WebSession, New-RequestHeader
 
 # 域名
@@ -68,6 +69,7 @@ function Get-WebContent {
                 $PSScriptPath
             )
 
+            # 脚本块内部无法通过 $PSScriptRoot 变量来获取到当前脚本执行的路径，因此只能通过传递参数的方式
             Import-Module "$PSScriptPath\module\WebParam.psm1" -Function New-WebSession, New-RequestHeader
 
             # 发送网络请求
@@ -84,7 +86,9 @@ function Get-WebContent {
     # 等待所有 Jobs 完成并收集结果
     return $jobs | ForEach-Object {
 
+        # 等待job执行完成获取job的执行结果
         $result = Receive-Job -Job $_ -Wait
+        # 删除job
         Remove-Job -Job $_ -Force -ErrorAction SilentlyContinue
 
         # 处理 Job 的结果
@@ -93,7 +97,6 @@ function Get-WebContent {
         }
     }
 }
-
 
 Write-Host "⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓提取到的磁力链接如下⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓" -ForegroundColor Red
 
