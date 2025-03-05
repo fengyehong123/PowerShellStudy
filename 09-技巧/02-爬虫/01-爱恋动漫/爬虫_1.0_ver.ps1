@@ -98,7 +98,7 @@ function Get-WebContent {
     }
 }
 
-Write-Host "⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓提取到的磁力链接如下⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓" -ForegroundColor Red
+Write-Host "`n开始提取磁力链接...`n" -ForegroundColor Green
 
 <#
     github地址
@@ -115,6 +115,8 @@ try {
 
     # 调用函数,获取包含各个磁力链接页面的内容
     $results = Get-WebContent -urls $target_web_urls -header $request_header
+
+    Write-Host "⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓提取到的磁力链接如下⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓" -ForegroundColor Red
 
     $results.Content | ForEach-Object {
 
