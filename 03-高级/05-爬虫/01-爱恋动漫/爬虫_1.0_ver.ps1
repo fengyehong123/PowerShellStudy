@@ -107,7 +107,7 @@ Write-Host "`n开始提取磁力链接...`n" -ForegroundColor Green
     下载源码后,手动编译 HtmlAgilityPack.Net40 ,得到 HtmlAgilityPack.dll
     引入 HtmlAgilityPack.dll 依赖库
 #>
-Add-Type -Path ".\module\HtmlAgilityPack.dll"
+Add-Type -Path "$($PSScriptRoot)\module\HtmlAgilityPack.dll"
 # 创建 HtmlDocument对象 用于解析html文本
 $htmlDoc = New-Object HtmlAgilityPack.HtmlDocument
 
