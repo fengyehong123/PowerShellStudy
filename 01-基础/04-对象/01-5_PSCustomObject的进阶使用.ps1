@@ -1,5 +1,5 @@
 ﻿# 定义一个类, 类里面有静态方法
-class project {
+class Project {
 
     # 静态方法
     static [PSCustomObject]GetCategoryInfo() {
@@ -27,7 +27,7 @@ class project {
 $key = "mpl"
 
 # ⏹获取map映射
-[PSCustomObject]$categoryInfoMap = [project]::GetCategoryInfo()
+[PSCustomObject]$categoryInfoMap = [Project]::GetCategoryInfo()
 
 # ⏹通过key获取到value
 $categoryInfoList = $categoryInfoMap.$key
@@ -36,17 +36,16 @@ foreach ($categoryInfo in $categoryInfoList) {
 }
 Write-Host "+ -----------------------------------------" -ForegroundColor Red
 
-
 # ⏹像java的HashMap那样去遍历
 foreach ($entry in $categoryInfoMap.PSObject.Properties) {
 
     # $entry.Name 就是键
     #                 mpl qch ang
-    Write-Output "Key → $($entry.Name)"
+    Write-Host "Key → $($entry.Name)"
 
     # $entry.Value 就是数组
     foreach ($v in $entry.Value) {
-        Write-Output "  Value → $v"
+        Write-Host "  Value → $v"
     }
 
     <#
@@ -69,7 +68,7 @@ Write-Host "+ -----------------------------------------" -ForegroundColor Red
 # ⏹像 Java map.keySet() 那样 只遍历key
 $categoryInfoMap.PSObject.Properties.Name | ForEach-Object {
     # 其中 _ 就代表当前被遍历的元素
-    Write-Output "key的值 → ${_}"
+    Write-Host "key的值 → ${_}"
     <#
         key的值 → mpl
         key的值 → ang
@@ -81,7 +80,7 @@ Write-Host "+ -----------------------------------------" -ForegroundColor Red
 # ⏹像 Java map.values() 那样 只遍历值
 foreach ($values in $categoryInfoMap.PSObject.Properties.Value) {
     foreach ($v in $values) {
-        Write-Output $v
+        Write-Host $v
     }
 }
 <#
