@@ -52,3 +52,15 @@ Get-ExecutionPolicy -Scope LocalMachine
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass
 # 2. 本地创建的脚本可以运行，下载的脚本需要经过有效的签名。
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+# ⏹查看整台机器的脚本执行策略
+Get-ExecutionPolicy -List | Format-Table -AutoSize
+<#
+                Scope ExecutionPolicy
+                ----- ---------------
+        MachinePolicy       Undefined
+           UserPolicy       Undefined
+              Process       Undefined
+          CurrentUser      Restricted
+         LocalMachine    RemoteSigned
+#>

@@ -33,7 +33,7 @@ REM      (Get-Content "%ARGV0: = %") -join "`n"
 REM           把当前脚本文件完整读入, 拼接成一段 PowerShell 代码 (以换行符连接)
 REM      Invoke-Expression
 REM           执行读取到的 PowerShell 代码
-PowerShell.exe -Command "Invoke-Expression -Command ((Get-Content \"%ARGV0: `=` `%\") -join \"`n\")"
+PowerShell.exe -ExecutionPolicy Bypass -Command "Invoke-Expression -Command ((Get-Content \"%ARGV0: `=` `%\") -join \"`n\")"
 exit /b %errorlevel%
 ') | Out-Null
 

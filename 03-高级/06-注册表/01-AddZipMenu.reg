@@ -1,0 +1,10 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\ZipWithPassword]
+@="压缩并加密为ZIP"
+
+; 通过vba脚本调用PowerShell脚本的方式执行
+; vba脚本只起到调用的时传参和隐藏powershell脚本窗口的作用
+;   %V → 当前右键点击文件夹背景所在的路径
+[HKEY_CLASSES_ROOT\Directory\Background\shell\ZipWithPassword\command]
+@="wscript.exe \"E:\\My_Project\\PowerShellStudy\\09-技巧\\19-RunHidden.vbs\" \"%V\""

@@ -1,5 +1,7 @@
 ﻿# 通过命令行参数,获取脚本所在的目录
-$originalScriptFolder = $args[0]
+param(
+    [string]$originalScriptFolderPath
+)
 
 <#
     校验当前用户是否有管理员权限
@@ -47,7 +49,7 @@ if (-not (Test-IsAdmin)) {
             因此只能通过参数传递的方式来解决
         #>
         Start-Process -FilePath "powershell.exe" `
-                      -ArgumentList "-NoProfile -ExecutionPolicy RemoteSigned -File $($PSCommandPath) $($PSScriptRoot)" `
+                      -ArgumentList "-NoProfile -ExecutionPolicy RemoteSigned -File $($PSCommandPath) -originalScriptFolderPath $($PSScriptRoot)" `
                       -Verb RunAs
                       # -Credential $AdminUserCredential
     } catch {
@@ -62,6 +64,6 @@ if (-not (Test-IsAdmin)) {
 Write-Host "已成功以管理员权限运行 PowerShell ..." -ForegroundColor Green
 
 Write-Host "当前Powshell所在的工作目录为: $(Get-Location)"
-Write-Host "在切换为管理员权限之前, 所在的工作目录为: $originalScriptFolder"
+Write-Host "在切换为管理员权限之前, 所在的工作目录为: $originalScriptFolderPath"
 
 Read-Host "按 Enter 键退出..."
