@@ -1,6 +1,6 @@
 ﻿param(
     # 目标文件夹
-    [string]$TargetFolderPath = "C:\Users\贾铭威\Desktop\伪装\123", 
+    [string]$TargetFolderPath = ".", 
     # 是否循环压缩
     [string]$forEachCompressFlag = "",
     # 压缩包的默认密码
