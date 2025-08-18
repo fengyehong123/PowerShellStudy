@@ -6,13 +6,23 @@
 ' 可以避免窗口一闪而过
 ' + --------------------------------------------------------
 
+' 接收从注册表传入的参数
+customPath = WScript.Arguments(0)
+flag = ""
+
+' 判断参数的数量, 防止下标越界
+If WScript.Arguments.Count > 1 Then
+    flag = WScript.Arguments(1)
+End If
+
 ' 创建脚本对象
 Set objShell = CreateObject("Wscript.Shell")
 
 ' 拼接命令
 command = "powershell.exe -NoProfile -ExecutionPolicy Bypass " & _
           "-File ""E:\My_Project\PowerShellStudy\09-技巧\19-压缩文件.ps1"" " & _
-          "-TargetFolderPath """ & WScript.Arguments(0) & """"
+          "-TargetFolderPath """ & customPath & """ " & _
+          "-forEachCompressFlag """ & flag & """"
 
 ' 执行命令（隐藏窗口、异步执行）
 objShell.Run command, 0, False

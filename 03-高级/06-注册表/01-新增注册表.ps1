@@ -4,14 +4,11 @@
 
 # 校验当前用户是否有管理员权限
 function Test-IsAdmin {
-
     $id = [System.Security.Principal.WindowsIdentity]::GetCurrent()
     $principal = New-Object System.Security.Principal.WindowsPrincipal($id)
-
     if ($principal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)) {
         return $true
     }
-
     return $false
 }
 
@@ -23,7 +20,6 @@ if (-not (Test-IsAdmin)) {
     Start-Sleep -Seconds 1
 
     try {
-        
         Start-Process -FilePath "powershell.exe" `
                       -ArgumentList "-NoProfile -ExecutionPolicy RemoteSigned -File $($PSCommandPath) -originalScriptFolderPath $($PSScriptRoot)" `
                       -Verb RunAs
@@ -56,10 +52,17 @@ $scriptFilePath = "E:\My_Project\PowerShellStudy\09-技巧\19-RunHidden.vbs"
 if (-not (Test-Path $baseKey)) {
     New-Item -Path $baseKey -Force | Out-Null
 }
-# 设置显示名称
-Set-ItemProperty -Path $baseKey -Name "(default)" -Value "压缩并加密为ZIP"
-# 设置显示名称对应的图标
-Set-ItemProperty -Path $baseKey -Name "Icon" -Value "powershell.exe"
+
+# 设置项目的各种属性
+$props = @{
+    '(default)' = '批量加密压缩为zip'
+    'Icon'      = 'powershell.exe'
+    # 指定项目的位置
+    'Position'  = 'Top'
+}
+$props.GetEnumerator() | ForEach-Object {
+    Set-ItemProperty -Path $baseKey -Name $_.Key -Value $_.Value
+}
 
 # ⏹2. 通过注册表创建 command 子项
 $commandKey = "$baseKey\command"

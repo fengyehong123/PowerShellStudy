@@ -1,10 +1,28 @@
 Windows Registry Editor Version 5.00
 
+; -------------- 注册表项目1 --------------
 [HKEY_CLASSES_ROOT\Directory\Background\shell\ZipWithPassword]
-@="压缩并加密为ZIP"
+@="批量加密压缩为zip"
+"Icon"="powershell.exe"
 
 ; 通过vba脚本调用PowerShell脚本的方式执行
 ; vba脚本只起到调用的时传参和隐藏powershell脚本窗口的作用
 ;   %V → 当前右键点击文件夹背景所在的路径
 [HKEY_CLASSES_ROOT\Directory\Background\shell\ZipWithPassword\command]
-@="wscript.exe \"E:\\My_Project\\PowerShellStudy\\09-技巧\\19-RunHidden.vbs\" \"%V\""
+@="wscript.exe \"E:\\My_Project\\PowerShellStudy\\09-技巧\\19-RunHidden.vbs\" \"%V\" \"forEachCompressFlag\""
+
+; -------------- 注册表项目2 --------------
+[HKEY_CLASSES_ROOT\Directory\shell\ZipFolderWithPassword]
+@="加密压缩文件夹为zip"
+"Icon"="powershell.exe"
+
+[HKEY_CLASSES_ROOT\Directory\shell\ZipFolderWithPassword\command]
+@="wscript.exe \"E:\\My_Project\\PowerShellStudy\\09-技巧\\19-RunHidden.vbs\" \"%1\""
+
+; -------------- 注册表项目3 --------------
+[HKEY_CLASSES_ROOT\*\shell\ZipFileWithPassword]
+@="加密压缩文件为zip"
+"Icon"="powershell.exe"
+
+[HKEY_CLASSES_ROOT\*\shell\ZipFileWithPassword\command]
+@="wscript.exe \"E:\\My_Project\\PowerShellStudy\\09-技巧\\19-RunHidden.vbs\" \"%1\""
