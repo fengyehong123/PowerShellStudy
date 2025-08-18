@@ -53,8 +53,8 @@ if (-not (Test-Path $baseKey)) {
     New-Item -Path $baseKey -Force | Out-Null
 }
 
-# 设置项目的各种属性
-$props = @{
+# 定义一个哈希表, 设置项目的各种属性
+[hashtable]$props = @{
     '(default)' = '批量加密压缩为zip'
     'Icon'      = 'powershell.exe'
     # 指定项目的位置
