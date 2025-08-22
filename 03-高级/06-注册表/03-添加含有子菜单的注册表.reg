@@ -1,0 +1,21 @@
+Windows Registry Editor Version 5.00
+
+; 主菜单：打包压缩
+[HKEY_CLASSES_ROOT\Directory\Background\shell\ZipMenu]
+"MUIVerb"="打包压缩"
+"Icon"="shell32.dll,259"
+"SubCommands"="zip_normal;zip_encrypt"
+
+; 子菜单 1：普通压缩
+[HKEY_CLASSES_ROOT\Directory\Background\shell\ZipMenu\shell\zip_normal]
+"MUIVerb"="普通压缩 (PowerShell)"
+"Icon"="powershell.exe"
+[HKEY_CLASSES_ROOT\Directory\Background\shell\ZipMenu\shell\zip_normal\command]
+@="powershell.exe -NoExit -Command \"Compress-Archive -Path * -DestinationPath '%V.zip'\""
+
+; 子菜单 2：加密压缩
+[HKEY_CLASSES_ROOT\Directory\Background\shell\ZipMenu\shell\zip_encrypt]
+"MUIVerb"="加密压缩 (7-Zip)"
+"Icon"="C:\\Program Files\\7-Zip\\7zFM.exe"
+[HKEY_CLASSES_ROOT\Directory\Background\shell\ZipMenu\shell\zip_encrypt\command]
+@="\"C:\\Program Files\\7-Zip\\7z.exe\" a -pYourPassword \"%V_encrypted.zip\" *"

@@ -9,10 +9,10 @@
 
 # ★★★★★★压缩软件的安装路径和种类★★★★★★
 # + -----------------------------------------------------
-# $CompressionSoft = "C:\软件\压缩软件\WinRAR.exe"
-# $CompressionSoftCategory = "WinRAR"
-$CompressionSoft = "E:\soft\7-Zip\7z.exe"
-$CompressionSoftCategory = "7z"
+$CompressionSoft = "C:\软件\压缩软件\WinRAR.exe"
+$CompressionSoftCategory = "WinRAR"
+# $CompressionSoft = "E:\soft\7-Zip\7z.exe"
+# $CompressionSoftCategory = "7z"
 # + -----------------------------------------------------
 
 if (-not (Test-Path $CompressionSoft)) {
@@ -21,21 +21,43 @@ if (-not (Test-Path $CompressionSoft)) {
     exit 1
 }
 
+function New-CompressionSoftArgs {
+
+    param (
+        [string]$Passwd,
+        [string]$ZipName,
+        [string]$FullPath
+    )
+
+    return [hashtable]@{
+        "WinRAR" = @(
+            "a",                                # 添加到压缩包
+            "-afzip",                           # 指定为 zip 格式
+            "-ep1",                             # 不包含根目录
+            "-p${Passwd}",                      # 压缩密码
+            "`"${ZipName}`"",                   # 输出的 zip 文件（带引号）
+            "`"$($ItemFileSystem.FullName)`""   # 被压缩的文件或目录（带引号）
+        );
+        "7z" = @(
+            "a",                                # 添加到压缩包
+            "`"$ZipName`"",                     # 输出的 zip 文件（带引号）
+            "`"$($ItemFileSystem.FullName)`"",  # 被压缩的文件或目录（带引号）
+            "-tzip",                            # 指定为 zip 格式
+            "-p${Passwd}",                      # 压缩密码
+            "-r"                                # 递归压缩子目录
+        )
+    }
+
+}
+
 function Invoke-Compression {
 
     param (
         # .Net的数据类型, 必须要写全数据类型
-        [System.IO.FileSystemInfo]$ItemFileSystem,
+        [IO.FileSystemInfo]$ItemFileSystem,
         [string]$Passwd,
         [string]$CompressionSoftCategory
     )
-
-    # 判断种类
-    if ($ItemFileSystem.PSIsContainer) {
-        Write-Host "文件夹"
-    } else {
-        Write-Host "文件"
-    }
 
     # 要做成的压缩文件的名称
     $ZipName = "$($ItemFileSystem.BaseName).zip"
@@ -46,27 +68,15 @@ function Invoke-Compression {
     }
 
     # 根据压缩软甲的种类指定压缩参数
-    $CommandArgs = $null
-    if ("WinRAR" -eq $CompressionSoftCategory) {
-        $CommandArgs = @(
-            "a",                                # 添加到压缩包
-            "-afzip",                           # 指定为 zip 格式
-            "-ep1",                             # 不包含根目录
-            "-p${Passwd}",                      # 压缩密码
-            "`"${ZipName}`"",                   # 输出的 zip 文件（带引号）
-            "`"$($ItemFileSystem.FullName)`""   # 被压缩的文件或目录（带引号）
-        )
-    } elseif ("7z" -eq $CompressionSoftCategory) {
-        $CommandArgs = @(
-            "a",                                # 添加到压缩包
-            "`"$ZipName`"",                     # 输出的 zip 文件（带引号）
-            "`"$($ItemFileSystem.FullName)`"",  # 被压缩的文件或目录（带引号）
-            "-tzip",                            # 指定为 zip 格式
-            "-p${Passwd}",                      # 压缩密码
-            "-r"                                # 递归压缩子目录
-        )
+    [hashtable]$SoftArgsHashTable = @{
+        Passwd = $Passwd
+        ZipName = $ZipName
+        FullPath = $ItemFileSystem.FullName
     }
+    [hashtable]$CommandArgsHashtable = New-CompressionSoftArgs @SoftArgsHashTable
 
+    # 根据压缩软件的类型获取其对应的参数
+    [string[]]$CommandArgs = $CommandArgsHashtable[$CompressionSoftCategory]
     # 执行压缩命令
     & $CompressionSoft @CommandArgs
 }

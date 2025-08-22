@@ -1,5 +1,5 @@
 ﻿# 判断dll文件是否存在
-$ddl_path = "$($PSScriptRoot)\file\Test.dll"
+$ddl_path = "$($PSScriptRoot)\02-1-C#代码编译而成的dll文件.dll"
 if (-not (Test-Path $ddl_path)) {
     exit 1;
 }
