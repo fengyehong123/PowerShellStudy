@@ -26,11 +26,11 @@
 
 # 获取当前会话中的所有驱动器
 Get-PSDrive
-Write-Host '-------------------------------'
+Write-Host '-------------------------------' -ForegroundColor Red
 
 # 获取特定类型的驱动器 ⇒ 系统驱动器
 Get-PSDrive -PSProvider FileSystem
-Write-Host '-------------------------------'
+Write-Host '-------------------------------' -ForegroundColor Red
 
 # 获取特定名称的驱动器 ⇒ 环境变量驱动器
 Get-PSDrive -Name Env
