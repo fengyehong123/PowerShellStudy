@@ -1,5 +1,4 @@
-﻿
-# 存储在本地机器上的应用程序数据
+﻿# 存储在本地机器上的应用程序数据
 $env:LOCALAPPDATA  # C:\Users\Admin\AppData\Local
 
 # 用户目录

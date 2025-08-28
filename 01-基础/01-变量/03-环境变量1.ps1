@@ -1,6 +1,10 @@
 ﻿# 来源
 # https://www.pstips.net/powershell-environment-variables.html
 
+# 查看系统中的所有环境变量
+Get-ChildItem "Env:"
+Write-Host '--------------------------------------------------------------------' -ForegroundColor Red
+
 # ⏹系统中的环境变量
 $env:Path
 
