@@ -25,8 +25,8 @@
         3. 最近的 Windows Script Host Version 是 2015年的 5.812，此后一直没有更新过
 #>
 
-$WSH_JScript_Path = "$($PSScriptRoot)\26-WSH_JScript.js"
-$Auto_JScript_Path = "$($PSScriptRoot)\26-auto.js"
+$WSH_JScript_Path = "$($PSScriptRoot)\02-WSH_JScript.js"
+$Auto_JScript_Path = "$($PSScriptRoot)\02-auto.js"
 
 <#
     //nologo

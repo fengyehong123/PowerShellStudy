@@ -9,11 +9,11 @@ for (var i = 0; i < argList.length; i++) {
 
 // 获取当前脚本的全路径
 var jsPath = WScript.ScriptFullName;
-WScript.Echo(jsPath);  // E:\My_Project\PowerShellStudy\09-技巧\26-WSH_JScript.js
+WScript.Echo(jsPath);  // E:\My_Project\PowerShellStudy\03-高级\09-使用wscript代码\02-WSH_JScript.js
 
 // 获取js文件的名称
 var jsFileName = WScript.ScriptName;
-WScript.Echo(jsFileName);  // 26-WSH_JScript.js
+WScript.Echo(jsFileName);  // 02-WSH_JScript.js
 WScript.Echo("-------------------------------------------------");
 
 // 创建一个 WshShell 对象，用于系统级别的操作

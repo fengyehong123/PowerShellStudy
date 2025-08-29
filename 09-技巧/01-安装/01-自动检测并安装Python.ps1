@@ -41,8 +41,8 @@ function Test-PythonCode {
 
     try {
         # -u 选项可以强制 Python 立即刷新输出，避免延迟。
-        python -u "15-pip依赖库检测自动安装.py"
-        python -u "15-爬虫测试.py"
+        python -u "01-pip依赖库检测自动安装.py"
+        python -u "01-爬虫测试.py"
     } catch {
         Write-Host "Python代码执行失败 :$($_.Exception.Message)" -ForegroundColor Red
     }

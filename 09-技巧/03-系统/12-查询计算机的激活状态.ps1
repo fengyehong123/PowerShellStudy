@@ -1,0 +1,1 @@
+﻿cscript.exe /nologo "$env:SystemRoot\System32\slmgr.vbs" /xpr

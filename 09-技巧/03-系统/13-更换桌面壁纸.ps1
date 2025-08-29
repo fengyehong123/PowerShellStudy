@@ -1,5 +1,5 @@
 ﻿# 将C#的代码导入到Powershell代码中
-Add-Type -Path "$($PSScriptRoot)\20-Wallpaper.cs"
+Add-Type -Path "$($PSScriptRoot)\13-Wallpaper.cs"
 
 <#
     解释：
