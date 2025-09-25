@@ -20,9 +20,15 @@ if exist "%psScript%" del "%psScript%"
 exit /b
 
 :: PowerShellStart
+# + ______________________                     ______________________ +
+# + ______________________ 以下为PowerShell代码 ______________________ +               
+
 Add-Type -AssemblyName Microsoft.VisualBasic
 
+# 弹出输入框
 $userInput = [Microsoft.VisualBasic.Interaction]::InputBox("请输入您的姓名：", "输入框", "默认值")
+
+# 打印输入的内容
 Write-Output "您输入的是：$userInput"
 
 Read-Host "按 Enter 键退出..."
