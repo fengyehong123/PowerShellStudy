@@ -14,7 +14,7 @@ public class NativeMethods {
 Write-Host '--------------------------------------------------------------------' -ForegroundColor Red
 
 # 将C#文件中的代码导入到Powershell代码中
-Add-Type -Path "$($PSScriptRoot)\00-C#_Source.cs"
+Add-Type -Path "$($PSScriptRoot)\00-C#_Source1.cs"
 
 # 使用C#代码中导入的类创建对象
 [Student]$stu = [Student]::new("李四", 22)
@@ -31,3 +31,14 @@ Write-Host '--------------------------------------------------------------------
 # 也可以通过 New-Object 的方式创建对象
 $stu2 = New-Object Student('张三', 300)
 $stu2.ToString() | Out-Host
+Write-Host '--------------------------------------------------------------------' -ForegroundColor Red
+
+<#
+    将C#文件中的代码导入到Powershell代码中
+    PowerShell 使用的 C# 编译器版本较低（一般是 Roslyn 的 C# 7.3 左右）
+    不支持 最新的C# 语法
+#>
+Add-Type -Path "$($PSScriptRoot)\00-C#_Source2.cs"
+
+# 调用C#中的静态方法
+[FileUtils]::CreateFile()
