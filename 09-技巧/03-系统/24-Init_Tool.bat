@@ -37,31 +37,19 @@ Write-Host "Step1: 文件扩展名显示成功!`n" -ForegroundColor Green
 # ###################################
 # 二. 当前系统静音                   #
 # ###################################
-$code = @"
+# 引入系统底层API, 创建键盘事件
+Add-Type -TypeDefinition @'
 using System;
 using System.Runtime.InteropServices;
 
-public static class AudioControl
-{
-    [DllImport("user32.dll")]
-    public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
-
-    [DllImport("user32.dll")]
-    public static extern IntPtr GetForegroundWindow();
+public class Keyboard {
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
 }
-"@
-Add-Type -TypeDefinition $code
+'@
 
-# 命令消息
-$WM_APPCOMMAND = 0x319
-# 静音的常量
-$APPCOMMAND_VOLUME_MUTE = 0x80000
-
-# 获取当前的windows广播对象
-$HWND_BROADCAST = [AudioControl]::GetForegroundWindow()
-
-# 发送全局的静音消息
-[AudioControl]::SendMessageW($HWND_BROADCAST, $WM_APPCOMMAND, [IntPtr]::Zero, [IntPtr]$APPCOMMAND_VOLUME_MUTE) | Out-Null
+# 模拟按下静音键
+[Keyboard]::keybd_event(0xAD, 0, 0, [UIntPtr]::Zero)
 Write-Host "Step2: 静音成功!`n" -ForegroundColor Green
 # ########################################################################################################################
 

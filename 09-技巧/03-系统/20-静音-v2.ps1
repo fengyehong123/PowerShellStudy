@@ -25,6 +25,5 @@ $APPCOMMAND_VOLUME_MUTE = 0x80000
 $HWND_BROADCAST = [AudioControl]::GetForegroundWindow()
 
 # 发送全局的静音消息
-[AudioControl]::SendMessageW($HWND_BROADCAST, $WM_APPCOMMAND, [IntPtr]::Zero, [IntPtr]$APPCOMMAND_VOLUME_MUTE)
+[AudioControl]::SendMessageW($HWND_BROADCAST, $WM_APPCOMMAND, [IntPtr]::Zero, [IntPtr]$APPCOMMAND_VOLUME_MUTE) | Out-Null
 
-Write-Host "系统已静音 ✅"
