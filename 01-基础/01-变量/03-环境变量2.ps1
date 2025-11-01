@@ -5,10 +5,11 @@ $env:LOCALAPPDATA  # C:\Users\Admin\AppData\Local
 $env:USERPROFILE  # C:\Users\Admin
 
 # 应用程序公有数据目录
-$env:CommonProgramFiles  # C:\Program Files (x86)\Common Files
+Get-ChildItem "$env:CommonProgramFiles"  # C:\Program Files\Common Files
 
 # 具体应用程序安装的目录
-$env:ProgramFiles  # C:\Program Files (x86)
+Get-ChildItem "${env:ProgramFiles}"  # C:\Program Files
+Get-ChildItem "${env:ProgramFiles(x86)}"  # C:\Program Files (x86)
 
 # 存储应用程序数据的公共文件夹
 $env:ProgramData  # C:\ProgramData
