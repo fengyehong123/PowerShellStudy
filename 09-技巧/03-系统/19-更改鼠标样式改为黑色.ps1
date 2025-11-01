@@ -34,6 +34,7 @@ Set-ItemProperty -Path $regPath -Name "Scheme Source" -Value 2
 Add-Type @"
 using System;
 using System.Runtime.InteropServices;
+
 public class NativeMethods {
     [DllImport("user32.dll", SetLastError = true)]
     public static extern bool SystemParametersInfo(int uAction, int uParam, IntPtr lpvParam, int fuWinIni);

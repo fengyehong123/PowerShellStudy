@@ -6,3 +6,5 @@ New-ItemProperty -LiteralPath "${folderSettingPath}" -Name "HideFileExt" -Proper
 
 # 设置“显示隐藏的文件、文件夹和驱动器” → 1 = 显示，2 = 不显示
 New-ItemProperty -LiteralPath "${folderSettingPath}" -Name "Hidden" -PropertyType "DWord" -Value "1" -Force
+
+# 需要配合 23-刷新桌面和文件夹.ps1 才能有效果
