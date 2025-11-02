@@ -1,6 +1,8 @@
 ﻿# 为脚本导入 Windows.Forms 对象
+using namespace System.Windows.Forms
 Add-Type -AssemblyName System.Windows.Forms
-[System.Windows.Forms.Application]::EnableVisualStyles()
+
+[Application]::EnableVisualStyles()
 
 # 创建文件夹对话框对象
 $FolderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog
@@ -18,7 +20,7 @@ $fileDialog = New-Object System.Windows.Forms.OpenFileDialog
 # 设置过滤条件
 $fileDialog.Filter = "文本文件 (*.txt)|*.txt|所有文件 (*.*)|*.*"
 
-if ($fileDialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
+if ($fileDialog.ShowDialog() -eq [DialogResult]::OK) {
     Write-Host "选择的文件是: $($fileDialog.FileName)"
 }
 
