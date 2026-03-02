@@ -39,3 +39,6 @@ Write-Host '------------------------------------------------' -ForegroundColor R
 $pathArray | ForEach-Object {
     $_ | Out-Host
 }
+
+# 查看当前脚本运行控制台的名称
+$Host.Name
