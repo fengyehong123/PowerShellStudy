@@ -52,7 +52,6 @@ $commandPath = "$regPath\command"
 
 if ($choice -ieq "a") {
 
-
     # 创建PowerShell截图脚本文件
     Set-Content -Path $psScriptPath -Value $psScript -Encoding UTF8
     # 创建vbs调用文件
