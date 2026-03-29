@@ -23,7 +23,7 @@ if (-not (Test-Path "$targetAddinFilePath")) {
 
 try {
 
-    # 创建一个工作簿
+    # 创建一个空工作簿
     $excel.Workbooks.Add() | Out-Null
     
     # 遍历所有的插件对象, 注册前, 查看自定义的插件对象是否存在
