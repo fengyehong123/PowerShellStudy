@@ -16,3 +16,27 @@ $shortcut.Save()
 
 # 关闭
 [System.Runtime.Interopservices.Marshal]::ReleaseComObject($wshShell) | Out-Null
+
+# 封装为函数
+function New-DesktopShortcut {
+
+    param (
+        [string]$TargetPath,
+        [string]$ShortcutName
+    )
+
+    # 拼接桌面快捷方式的路径
+    $desktop = [Environment]::GetFolderPath("Desktop")
+    $shortcutPath = Join-Path $desktop ($ShortcutName + ".lnk")
+
+    # 创建WScript对象
+    $wsh = New-Object -ComObject WScript.Shell
+    # 保存快捷方式
+    $shortcut = $wsh.CreateShortcut($shortcutPath)
+    $shortcut.TargetPath = $TargetPath
+    $shortcut.Save()
+
+    # 释放WScript对象
+    [System.Runtime.Interopservices.Marshal]::ReleaseComObject($wsh) | Out-Null
+
+}
