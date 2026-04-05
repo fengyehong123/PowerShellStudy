@@ -60,23 +60,5 @@ function ConvertToUpperCase {
 #>
 Write-Host '↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳' -ForegroundColor Red
 
-# 所有用户和所有 PowerShell 主机应用程序的配置文件。
-$PROFILE.AllUsersAllHosts
-# 所有用户和当前 PowerShell 主机应用程序的配置文件。
-$PROFILE.AllUsersCurrentHost
-# 当前用户和所有 PowerShell 主机应用程序的配置文件。
-$PROFILE.CurrentUserAllHosts
-# 当前用户和当前 PowerShell 主机应用程序的配置文件。
-$PROFILE.CurrentUserCurrentHost
-$PROFILE
-
 # powershell中设置控制台的编码格式
 $OutputEncoding = [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-
-Write-Host '↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳' -ForegroundColor DarkYellow
-
-<#
-    $PSCommandPath 是一个特殊的变量，表示当前脚本所在的绝对路径
-#>
-Write-Host $PSCommandPath
-Write-Host $MyInvocation.MyCommand.Definition

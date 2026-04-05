@@ -17,7 +17,7 @@ icacls $path /inheritance:d | Out-Null
 # icacls $path /remove "UserB"
 
 # 给指定的用户完全的权限
-icacls $path /grant "贾铭威:(OI)(CI)F" | Out-Null
+icacls $path /grant "枫叶红:(OI)(CI)F" | Out-Null
 
 # 删除默认用户组
 icacls $path /remove "Users" | Out-Null
