@@ -16,3 +16,10 @@ $temp = [Marshal]::SecureStringToBSTR($input_pwd)
 [Marshal]::PtrToStringAuto($temp) | Out-Host
 
 Write-Host '↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳↳' -ForegroundColor Red
+
+$confirm = Read-Host "是否下载并安装 PowerShell 7? (Y/N)"
+if ($confirm -notin @("Y","y","Yes","yes")) {
+    Write-Host "已取消安装。"
+    exit
+}
+Write-Host "开始下载..."

@@ -1,5 +1,5 @@
 ﻿# 要安装的插件名称
-$addInFileName = "09-MyTool.xlam"
+$addInFileName = "01-MyTool.xlam"
 # 插件所在的路径
 $sourceAddin = Join-Path $PSScriptRoot $addInFileName
 

@@ -20,7 +20,7 @@ Set objShell = CreateObject("Wscript.Shell")
 
 ' 拼接命令
 command = "powershell.exe -NoProfile -ExecutionPolicy Bypass " & _
-          "-File ""E:\My_Project\PowerShellStudy\09-技巧\19-压缩文件.ps1"" " & _
+          "-File ""E:\My_Project\PowerShellStudy\09-技巧\05-软件\04-压缩解压\01-压缩文件.ps1"" " & _
           "-TargetFolderPath """ & customPath & """ " & _
           "-forEachCompressFlag """ & flag & """"
 
