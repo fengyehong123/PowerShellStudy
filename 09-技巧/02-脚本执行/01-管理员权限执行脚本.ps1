@@ -38,7 +38,7 @@ if (-not (Test-IsAdmin)) {
                 允许本地脚本运行，但远程脚本需要数字签名。
             $PSCommandPath
                 特殊变量，用于表示当前脚本所在的绝对路径
-            $PSCommandPath
+            $PSScriptRoot
                 特殊变量，用于表示当前脚本所在的目录
             -Verb RunAs
                 -Verb 参数指定启动进程时的动作或方式。
