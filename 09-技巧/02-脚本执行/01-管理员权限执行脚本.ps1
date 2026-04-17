@@ -3,9 +3,7 @@ param(
     [string]$originalScriptFolderPath
 )
 
-<#
-    校验当前用户是否有管理员权限
-#>
+# 校验当前用户是否有管理员权限
 function Test-IsAdmin {
 
     $id = [System.Security.Principal.WindowsIdentity]::GetCurrent()
@@ -65,5 +63,12 @@ Write-Host "已成功以管理员权限运行 PowerShell ..." -ForegroundColor G
 
 Write-Host "当前Powshell所在的工作目录为: $(Get-Location)"
 Write-Host "在切换为管理员权限之前, 所在的工作目录为: $originalScriptFolderPath"
+
+# 当以管理员权限运行脚本的时候, 作业目录默认会移动到【C:\WINDOWS\system32】下
+# 可以手动将作业目录其移动到脚本所在的文件夹路径
+if ($null -ne $originalScriptFolderPath) {
+    Set-Location $originalScriptFolderPath
+}
+Write-Host "当前Powshell所在的工作目录为: $(Get-Location)"
 
 Read-Host "按 Enter 键退出..."
