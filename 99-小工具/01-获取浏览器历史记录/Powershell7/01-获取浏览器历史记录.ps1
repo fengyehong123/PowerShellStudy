@@ -23,17 +23,13 @@ $cmd = $conn.CreateCommand()
 $cmd.CommandText = "SELECT url, title, last_visit_time FROM urls"
 $reader = $cmd.ExecuteReader()
 
-# ===============================
 # 时间转换函数
-# ===============================
 function Convert-ChromeTime($time) {
     $epoch = Get-Date "1601-01-01"
     return $epoch.AddMilliseconds($time / 1000)
 }
 
-# ===============================
 # 输出结果
-# ===============================
 while ($reader.Read()) {
     $time  = Convert-ChromeTime $reader["last_visit_time"]
     $title = $reader["title"]
@@ -44,9 +40,7 @@ while ($reader.Read()) {
     Write-Host "----------------------"
 }
 
-# ===============================
 # 关闭连接
-# ===============================
 $conn.Close()
 
 Pause
