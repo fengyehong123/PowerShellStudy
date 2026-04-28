@@ -5,7 +5,7 @@ Add-Type -AssemblyName System.Windows.Forms
 [Application]::EnableVisualStyles()
 
 # 创建文件夹对话框对象
-$FolderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog
+$FolderBrowser = New-Object FolderBrowserDialog
 # 打开对话框
 $FolderBrowser.ShowDialog() | Out-Null
 
@@ -16,7 +16,7 @@ Write-Host "用户选择的文件夹路径为: $Path"
 # ------------------------------------------------------------------------------------------------------------------
 
 # 创建文件对话框对象
-$fileDialog = New-Object System.Windows.Forms.OpenFileDialog
+$fileDialog = New-Object OpenFileDialog
 # 设置过滤条件
 $fileDialog.Filter = "文本文件 (*.txt)|*.txt|所有文件 (*.*)|*.*"
 
