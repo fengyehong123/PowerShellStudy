@@ -1,0 +1,2 @@
+. 'E:\My_Project\PowerShellStudy\09-技巧\07-共享\01-创建桌面共享目录.ps1'
+clear

@@ -13,3 +13,9 @@ Get-NetAdapter | Select-Object Name, InterfaceDescription
 # 这行命令会在名为【以太网】的网卡上 禁用 IPv6 协议。
 # 相当于在 网络适配器属性 里面，把 Internet Protocol Version 6 (TCP/IPv6) 的勾去掉。
 Disable-NetAdapterBinding -Name "以太网" -ComponentID "ms_tcpip6"
+
+
+# 方法二：微软推荐 → 降低IPV6优先级, 优先使用IPV4(将以下代码保存为.reg)
+# Windows Registry Editor Version 5.00
+# [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters]
+# "DisabledComponents"=dword:00000020
