@@ -1,4 +1,8 @@
-﻿<#
+﻿# 查看所有的网卡的MAC地址
+Get-NetAdapter | Format-Table Name, InterfaceDescription, Status, MacAddress -AutoSize
+Write-Host "---------------------------------------------------"
+
+<#
     PowerShell 默认的对象输出方式 是 异步刷新的，它并不会阻塞 Write-Host，所以在 Get-WmiObject 的对象还没完全处理完的情况下，Write-Host 可能先被执行。
     因此我们通过 Out-Host 强制立即输出所有结果，等全部结果都输出完毕只有，才向下执行 Write-Host
 #>
