@@ -20,6 +20,10 @@ $env:PUBLIC  # C:\Users\Public
 # 当前用户的应用数据文件夹的路径
 $env:APPDATA  # C:\Users\Admin\AppData\Roaming
 
+# 用户当前的桌面壁纸 → TranscodedWallpaper
+# 添加 .png 或 .jpg 的后缀之后, 就可以查看了
+"$env:APPDATA\Microsoft\Windows\Themes"
+
 # 当前用户的临时目录
 $env:TMP  # C:\Users\Admin\AppData\Local\Temp
 $env:TEMP  # C:\Users\Admin\AppData\Local\Temp
